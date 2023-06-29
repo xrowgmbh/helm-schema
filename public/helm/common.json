@@ -1,26 +1,45 @@
 {
-  "$schema": "http://json-schema.org/schema#",
-  "type": "object",
-  "required": [
-      "image"
-  ],
-  "properties": {
-      "image": {
-          "type": "object",
-          "required": [
-              "repository",
-              "pullPolicy"
-          ],
-          "properties": {
-              "repository": {
-                  "type": "string",
-                  "pattern": "^[a-z0-9-_]+$"
-              },
-              "pullPolicy": {
-                  "type": "string",
-                  "pattern": "^(Always|Never|IfNotPresent)$"
-              }
-          }
-      }
-  }
+    "$schema": "http://json-schema.org/schema#",
+    "id": "https://xrow.com/helm/common.json",
+    "type": "object",
+    "definitions": {
+        "Persistence": {
+            "type": "object",
+            "required": [
+                "enabled"
+            ],
+            "properties": {
+                "enabled": {
+                    "description": "Whether enable persistence.",
+                    "type": "boolean"
+                }
+            }
+        },
+        "ServiceAccount": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "create": {
+                    "type": "boolean"
+                },
+                "annotations": {
+                    "$ref": "#/definitions/Annotations"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "annotations",
+                "create",
+                "name"
+            ],
+            "title": "ServiceAccount"
+        },
+        "Annotations": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "Annotations"
+        }
+    }
 }

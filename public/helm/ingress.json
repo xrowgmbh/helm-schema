@@ -1,0 +1,119 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "id": "https://xrow.com/helm/ingress.json",
+    "type": "object",
+    "required": [
+        "ingress",
+        "service"
+    ],
+    "properties": {
+        "ingress": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Ingress"
+                }
+            ]
+        },
+        "service": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Service"
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "Service": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "port",
+                "type"
+            ],
+            "title": "Service"
+        },
+        "Ingress": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "className": {
+                    "type": "string"
+                },
+                "annotations": {
+                    "$ref": "#/definitions/Annotations"
+                },
+                "hosts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Host"
+                    }
+                },
+                "tls": {
+                    "type": "array",
+                    "items": {}
+                }
+            },
+            "required": [
+                "annotations",
+                "className",
+                "enabled",
+                "hosts",
+                "tls"
+            ],
+            "title": "Ingress"
+        },
+        "Annotations": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "Annotations"
+        },
+        "Host": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "paths": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Path"
+                    }
+                }
+            },
+            "required": [
+                "host",
+                "paths"
+            ],
+            "title": "Host"
+        },
+        "Path": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "path": {
+                    "type": "string"
+                },
+                "pathType": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "path",
+                "pathType"
+            ],
+            "title": "Path"
+        }
+    }
+}

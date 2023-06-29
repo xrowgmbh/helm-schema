@@ -1,0 +1,8 @@
+{{- define "common.tpl.container" -}}
+securityContext:
+  {{- toYaml .Values.securityContext | nindent 2 }}
+image: {{ include "common.images.image" ( dict "imageRoot" .Values.image "global" .Values.global ) }}
+imagePullPolicy: {{ .Values.image.pullPolicy }}
+resources:
+  {{- toYaml .Values.resources | nindent 2 }}
+{{- end -}}

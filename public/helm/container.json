@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "id": "https://xrow.com/helm/container.json",
+    "type": "object",
+    "properties": {
+        "securityContext": {
+            "type": "object"
+        },
+        "resources": {
+            "type": "object"
+        },
+        "image": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Image"
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "Image": {
+            "type": "object",
+            "required": [
+                "registry",
+                "repository",
+                "tag",
+                "pullPolicy"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "registry": {
+                    "description": "Docker registry where the image is located",
+                    "type": "string",
+                    "pattern": "^[a-z0-9-.]+$"
+                },
+                "repository": {
+                    "description": "Repository and image name",
+                    "type": "string",
+                    "pattern": "^[a-z0-9-_]+$"
+                },
+                "tag": {
+                    "description": "image tag",
+                    "type": "string",
+                    "pattern": "^[a-z0-9-.]+$"
+                },
+                "pullPolicy": {
+                    "description": "Specify a imagePullPolicy. Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'",
+                    "type": "string",
+                    "pattern": "^(Always|Never|IfNotPresent)$"
+                },
+                "pullSecrets": {
+                    "description": "Optionally specify an array of imagePullSecrets (evaluated as templates).",
+                    "type": "array"
+                }
+            }
+        }
+    }
+}

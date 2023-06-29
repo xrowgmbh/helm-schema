@@ -1,0 +1,27 @@
+
+annotations:
+  category: Infrastructure
+  licenses: Apache-2.0
+apiVersion: v2
+# Please make sure that version and appVersion are always the same.
+appVersion: 0.0.0
+description: A Library Helm Chart for grouping common logic between charts. This chart is not deployable by itself.
+home: https://gitlab.com/xrow-public/schema
+icon: https://www.xrow.de/web/image/website/1/logo/XROW%20GmbH?unique=a340bb7
+keywords:
+  - common
+  - helper
+  - template
+  - function
+maintainers:
+  - name: XROW GMBH
+    url: https://www.xrow.de
+name: common
+sources:
+  - https://gitlab.com/xrow-public/schema
+type: library
+version: 2.4.0
+dependencies:
+  - name: common
+    version: 2.x.x
+    repository: oci://registry-1.docker.io/bitnamicharts

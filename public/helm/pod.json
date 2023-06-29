@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "id": "https://xrow.com/helm/pod.json",
+    "type": "object",
+    "properties": {
+        "affinity": {
+            "type": "object"
+        },
+        "podAnnotations": {
+            "type": "object"
+        },
+        "podSecurityContext": {
+            "type": "object"
+        },
+        "tolerations": {
+            "type": "array"
+        },
+        "nodeSelector": {
+            "type": "object"
+        },
+        "autoscaling": {
+            "type": "object"
+        },
+        "resources": {
+            "type": "object"
+        }
+    }
+}

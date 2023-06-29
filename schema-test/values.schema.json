@@ -3,7 +3,7 @@
     "id": "https://xrow.com/helm/test.json",
     "allOf": [
         {
-            "$ref": "http://example.com/thing.json"
+            "$ref": "https://schema.xrow.com/helm/common.json"
         },
         {
             "type": "object",

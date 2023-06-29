@@ -1,4 +1,20 @@
+
+variables:
+  DOMAIN: schema.xrow.com
+
+test:
+  stage: .pre
+  script:
+  - openssl req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -sha256 -days 3650 -nodes -subj "/CN=${DOMAIN}" -addext "subjectAltName=DNS:localhost,IP:127.0.0.1"
+  - cp server.crt /etc/pki/ca-trust/source/anchors/server.crt
+  - update-ca-trust
+  - podman build -t test .
+  - podman run -d --name test -p 443:443 test
+  - echo "127.0.0.1 ${DOMAIN}" >> /etc/hosts
+  - helm lint schema-test/
+
 pages:
+  needs: ["test"]
   script:
     - echo "Publish schemas"
   artifacts:

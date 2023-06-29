@@ -1,0 +1,6 @@
+pages:
+  script:
+    - echo "Publish schemas"
+  artifacts:
+    paths:
+      - public

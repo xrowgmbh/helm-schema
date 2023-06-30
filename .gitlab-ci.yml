@@ -1,14 +1,13 @@
 test:
   variables:
     DOMAIN: schema.test.com
-    DOCUMENT_ROOT: ./public
   image: quay.io/podman/stable:latest
   stage: .pre
   script:
   - |
     yum install -y openssl
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-    for file in $(find ${DOCUMENT_ROOT}/ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
+    for file in $(find ./ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
         sed -i "s/schema.example.com/${DOMAIN}/" $file
         echo "Modified: $file"
     done

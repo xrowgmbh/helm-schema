@@ -31,7 +31,12 @@
                     "type": "string"
                 },
                 "port": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Port of service"
+                },
+                "targetPort": {
+                    "type": "integer",
+                    "description": "Target Port to map to, else port will be used"
                 }
             },
             "required": [
@@ -65,8 +70,6 @@
                 }
             },
             "required": [
-                "annotations",
-                "className",
                 "enabled",
                 "hosts",
                 "tls"
@@ -75,7 +78,7 @@
         },
         "Annotations": {
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": true,
             "title": "Annotations"
         },
         "Host": {

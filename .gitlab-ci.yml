@@ -1,9 +1,6 @@
 include:
 - remote: "https://gitlab.com/xrow-public/ci-tools/raw/3.0/.gitlab-helm-and-docker.yml"
 
-build:container:
-  stage: .pre
-
 build:helm:common:
   variables:
     CHART_DIR: ./schema-test/charts/common
@@ -27,7 +24,8 @@ lint:helm:
         sed -i "s/schema.example.com/${DOMAIN}/" $file
         echo "Modified: $file"
     done
-    podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:8443 -p 80:8080 ${CI_REGISTRY}/${CI_PROJECT_PATH}:$CI_COMMIT_SHA
+    podman build -t schema .
+    podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:8443 -p 80:8080 schema
     curl --head -X GET --retry 10 --retry-connrefused --retry-delay 2 --fail http://localhost:80
     openssl s_client -showcerts -connect localhost:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /etc/pki/ca-trust/source/anchors/server.crt
     update-ca-trust

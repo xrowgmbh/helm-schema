@@ -20,6 +20,8 @@ lint:helm:
     artifacts: false
   script:
   - |
+    source <(curl -s https://gitlab.com/xrow-public/ci-tools/-/raw/3.0/scripts/library.sh)
+    ci_registry_token_login
     yum install -y openssl
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     for file in $(find ./ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 

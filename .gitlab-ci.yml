@@ -6,12 +6,18 @@ build:helm:common:
     CHART_DIR: ./schema-test/charts/common
   extends: .template:helm:build
 
+build:container:
+  stage: .pre
+
 lint:helm:
+  services:
+  - name: ${CI_REGISTRY}/${$CI_PROJECT_PATH}:${CI_COMMIT_SHA}
+    alias: schema.test.com
   variables:
     DOMAIN: schema.test.com
   image: quay.io/podman/stable:latest
   stage: lint
-  needs: []
+  needs: ["build:container"]
   script:
   - |
     source <(curl -s https://gitlab.com/xrow-public/ci-tools/-/raw/3.0/scripts/library.sh)
@@ -19,13 +25,11 @@ lint:helm:
     yum install -y openssl
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     for file in $(find ./ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
-        sed -i "s/schema.example.com/${DOMAIN}/" $file
+        sed -i "s/schema.example.com/${DOMAIN}:8443/" $file
         echo "Modified: $file"
     done
-    podman build -t schema .
-    podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:8443 -p 80:8080 schema
-    curl --head -X GET --retry 10 --retry-connrefused --retry-delay 5 --fail http://localhost:80
-    openssl s_client -showcerts -connect localhost:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /etc/pki/ca-trust/source/anchors/server.crt
+    curl --head -X GET --retry 10 --retry-connrefused --retry-delay 5 --fail http://${DOMAIN}:8080
+    openssl s_client -showcerts -connect ${DOMAIN}:8443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /etc/pki/ca-trust/source/anchors/server.crt
     update-ca-trust
     echo "127.0.0.1 ${DOMAIN}" >> /etc/hosts
     helm lint schema-test/

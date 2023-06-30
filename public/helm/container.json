@@ -7,6 +7,36 @@
             "type": "object",
             "description": "Settings for privilege and access control for the container"
         },
+        "env": {
+            "type": "array",
+            "description": "Predefined environment variables to pass",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "extraEnv": {
+            "type": "array",
+            "description": "Extended environment variables to pass",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "resources": {
             "type": "object",
             "description": "The hardware resources Kubernetes shall use for every pod",

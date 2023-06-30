@@ -11,9 +11,7 @@ lint:helm:
     DOMAIN: schema.test.com
   image: quay.io/podman/stable:latest
   stage: lint
-  needs:
-  - job: "build:container"
-    artifacts: false
+  needs: []
   script:
   - |
     source <(curl -s https://gitlab.com/xrow-public/ci-tools/-/raw/3.0/scripts/library.sh)

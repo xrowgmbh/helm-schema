@@ -23,5 +23,5 @@ version: 0.0.0
 # It is recommended to use it with quotes.
 appVersion: "0.0.0"
 dependencies:
-  - name: common
-    version: x.x.x
+- name: common
+  version: 2.x.x

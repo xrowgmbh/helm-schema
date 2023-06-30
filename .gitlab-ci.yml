@@ -14,7 +14,7 @@ lint:helm:
   variables:
     DOMAIN: schema.test.com
   image: quay.io/podman/stable:latest
-  stage: test
+  stage: lint
   needs:
   - job: "build:container"
     artifacts: false

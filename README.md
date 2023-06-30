@@ -18,6 +18,5 @@ helm lint schema-test/
 
 We can infer a schema from existing YAML values and use it as a starting point when writing a new schema. The steps are:
 
-* Convert your values YAML file to JSON on https://www.json2yaml.com/
-* Paste the JSON on https://www.jsonschema.net/ and click on "Infer Schema
+* Convert your values YAML file to JSON SCHEMA on https://codebeautify.org/yaml-to-json-schema-generator
 * Paste the schema into the values.schema.json file

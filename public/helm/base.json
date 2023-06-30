@@ -4,7 +4,8 @@
     "type": "object",
     "properties": {
         "global": {
-            "type": "object"
+            "type": "object",
+            "description": "Global settings"
         },
         "nameOverride": {
             "type": "string"

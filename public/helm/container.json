@@ -9,15 +9,71 @@
         "resources": {
             "type": "object"
         },
+        "command": {
+            "type": "array",
+            "description": "Command"
+        },
+        "args": {
+            "type": "array",
+            "description": "Command Arguments"
+        },
         "image": {
             "allOf": [
                 {
                     "$ref": "#/definitions/Image"
                 }
             ]
+        },
+        "livenessProbe": {
+            "$ref": "#/definitions/Probe"
+        },
+        "readinessProbe": {
+            "$ref": "#/definitions/Probe"
+        },
+        "startupProbe": {
+            "$ref": "#/definitions/Probe"
         }
     },
     "definitions": {
+        "Probe": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "exec": {
+                    "type": "object"
+                },
+                "initialDelaySeconds": {
+                    "type": "integer"
+                },
+                "periodSeconds": {
+                    "type": "integer"
+                },
+                "timeoutSeconds": {
+                    "type": "integer"
+                },
+                "failureThreshold": {
+                    "type": "integer"
+                },
+                "successThreshold": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "enabled",
+                "failureThreshold",
+                "initialDelaySeconds",
+                "periodSeconds",
+                "successThreshold",
+                "timeoutSeconds"
+            ],
+            "title": "Probe"
+        },
         "Image": {
             "type": "object",
             "required": [

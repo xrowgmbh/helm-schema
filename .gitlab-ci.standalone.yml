@@ -2,6 +2,7 @@ test:
   variables:
     DOMAIN: schema.test.com
     CONTAINER_PODMAN: quay.io/podman/stable:latest
+    WEBSERVER_IMAGE: registry.redhat.io/rhel8/httpd-24
   image: $CONTAINER_PODMAN
   stage: test
   needs:
@@ -15,30 +16,10 @@ test:
         sed -i "s/schema.example.com/${DOMAIN}/" $file
         echo "Modified: $file"
     done
-    podman build -t schema .
-    podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:443 -p 80:80 schema
+    podman build -build-arg "WEBSERVER_IMAGE=${WEBSERVER_IMAGE}" -t schema .
+    podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:8443 -p 80:8080 schema
     curl --head -X GET --retry 10 --retry-connrefused --retry-delay 2 --fail http://${DOMAIN}:80
     openssl s_client -showcerts -connect localhost:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /etc/pki/ca-trust/source/anchors/server.crt
     update-ca-trust
     # echo "127.0.0.1 ${DOMAIN}" >> /etc/hosts
     helm lint schema-test/
-
-pages:
-  variables:
-    DOMAIN: schema.xrow.com
-    DOCUMENT_ROOT: ./public
-  needs: ["test"]
-  script:
-  - |
-    if [[ ! -v DOMAIN ]] ; then
-      echo "Setup CI variable DOMAIN"
-      exit 1
-    fi
-    echo "Publish schemas for ${DOMAIN}"
-    for file in $(find ${DOCUMENT_ROOT}/ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
-        sed -i "s/schema.example.com/${DOMAIN}/" $file
-        echo "Modified: $file"
-    done
-  artifacts:
-    paths:
-      - public

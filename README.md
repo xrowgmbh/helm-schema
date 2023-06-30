@@ -1,8 +1,8 @@
-# Json Schemas for Helm
+# JSON schemas for Helm
 
-Develop:
+## Develop
 
-See test job for build.
+Execute:
 
 ```bash
 sh build.sh

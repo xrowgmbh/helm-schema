@@ -21,7 +21,7 @@ sources:
   - https://gitlab.com/xrow-public/schema
 type: library
 version: 0.0.0
-dependencies:
-- name: webserver
-  version: x.x.x
-  repository: oci://registry-1.docker.io/bitnamicharts
+# dependencies:
+# - name: webserver
+#   version: x.x.x
+#   repository: oci://registry-1.docker.io/bitnamicharts

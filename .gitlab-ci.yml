@@ -39,7 +39,7 @@ pages:
   variables:
     DOMAIN: schema.xrow.com
     DOCUMENT_ROOT: ./public
-  needs: ["test"]
+  needs: ["lint:helm"]
   script:
   - |
     if [[ ! -v DOMAIN ]] ; then

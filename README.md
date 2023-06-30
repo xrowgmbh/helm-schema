@@ -4,11 +4,15 @@ Develop:
 
 See test job for build.
 
-podman stop test || true
-podman rm test || true
-podman run -d -u root --name test -v $(pwd)/public/:/usr/local/apache2/htdocs/:z -p 443:443 test
+```bash
+sh build.sh
+```
 
+Now do a change in the code or the schema and run the following command for testing:
+
+```
 helm lint schema-test/
+```
 
 ## Creating a JSON Schema for existing YAML values
 

@@ -1,28 +1,8 @@
-include:
-- remote: "https://gitlab.com/xrow-public/ci-tools/raw/3.0/.gitlab-helm-and-docker.yml"
-- template: ".gitlab-ci.standalone.yml"
-
-build:container:
-  stage: .pre
-
-lint:helm:
-  needs:
-  - job: "build:container"
-    artifacts: false
-
-build:helm:common:
-  variables:
-    CHART_DIR: ./schema-test/charts/common
-  extends: .template:helm:build
-
 test:
-  services:
-  - name: ${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_SHA}
-    alias: schema.test.com
   variables:
     DOMAIN: schema.test.com
-    CI_DEBUG_SERVICES: "true"
-  image: quay.io/podman/stable:latest
+    CONTAINER_PODMAN: quay.io/podman/stable:latest
+  image: $CONTAINER_PODMAN
   stage: test
   needs:
   - job: "build:container"
@@ -35,8 +15,8 @@ test:
         sed -i "s/schema.example.com/${DOMAIN}/" $file
         echo "Modified: $file"
     done
-    #podman build -t schema .
-    #podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:443 -p 80:80 schema
+    podman build -t schema .
+    podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:443 -p 80:80 schema
     curl --head -X GET --retry 10 --retry-connrefused --retry-delay 2 --fail http://${DOMAIN}:80
     openssl s_client -showcerts -connect localhost:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /etc/pki/ca-trust/source/anchors/server.crt
     update-ca-trust

@@ -1,6 +1,6 @@
 include:
 - remote: "https://gitlab.com/xrow-public/ci-tools/raw/3.0/.gitlab-helm-and-docker.yml"
-- template: ".gitlab-ci.standalone.yml"
+- local: ".gitlab-ci.standalone.yml"
 
 build:container:
   stage: .pre

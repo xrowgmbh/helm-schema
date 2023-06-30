@@ -4,25 +4,48 @@
     "type": "object",
     "properties": {
         "affinity": {
-            "type": "object"
+            "type": "object",
+            "description": "Settings for affinity rules"
         },
         "podAnnotations": {
             "type": "object"
         },
         "podSecurityContext": {
-            "type": "object"
+            "type": "object",
+            "description": "Settings for privilege and access control for the Pod"
         },
         "tolerations": {
-            "type": "array"
+            "type": "array",
+            "description": "Settings for tolerations"
         },
         "nodeSelector": {
-            "type": "object"
+            "type": "object",
+            "description": "Set node selectors to assign the pod to a specific node"
         },
         "autoscaling": {
-            "type": "object"
-        },
-        "resources": {
-            "type": "object"
+            "type": "object",
+            "description": "Horizontal Pod Autoscaler config",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether or not to use HPA"
+                },
+                "minReplicas": {
+                    "type": "integer",
+                    "description": "Minimum pods available",
+                    "minimum": 0
+                },
+                "maxReplicas": {
+                    "type": "integer",
+                    "description": "Maximum pods available",
+                    "minimum": 0
+                },
+                "targetAverageUtilization": {
+                    "type": "integer",
+                    "description": "Percentage of the maximum average CPU utilization of the requested ressources before scaling up",
+                    "minimum": 0
+                }
+            }
         }
     }
 }

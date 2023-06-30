@@ -4,9 +4,11 @@
     "type": "object",
     "properties": {
         "securityContext": {
-            "type": "object"
+            "type": "object",
+            "description": "Settings for privilege and access control for the container"
         },
         "resources": {
+            "type": "object",
             "description": "The hardware resources Kubernetes shall use for every pod",
             "properties": {
                 "limits": {

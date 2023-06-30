@@ -15,30 +15,10 @@
                 }
             }
         },
-        "ServiceAccount": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "create": {
-                    "type": "boolean"
-                },
-                "annotations": {
-                    "$ref": "#/definitions/Annotations"
-                },
-                "name": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "annotations",
-                "create",
-                "name"
-            ],
-            "title": "ServiceAccount"
-        },
         "Annotations": {
             "type": "object",
-            "additionalProperties": false,
+            "descriptions": "Annotations for this service account",
+            "additionalProperties": true,
             "title": "Annotations"
         }
     }

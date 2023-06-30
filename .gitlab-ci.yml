@@ -1,3 +1,6 @@
+include:
+  - remote: "https://gitlab.com/xrow-public/ci-tools/raw/3.0/.gitlab-helm-and-docker.yml"
+
 test:
   variables:
     DOMAIN: schema.test.com

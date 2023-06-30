@@ -7,25 +7,26 @@ build:container:
 test:
   services:
   - name: ${CI_REGISTRY}/${CI_PROJECT_PATH}/helm-schema:${CI_COMMIT_SHA}
-    alias: schema
+    alias: schema.test.com
   variables:
     DOMAIN: schema.test.com
+    CI_DEBUG_SERVICES: "true"
   image: quay.io/podman/stable:latest
   stage: test
   script:
   - |
     yum install -y openssl
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-    for file in $(find ./ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
-        sed -i "s/schema.example.com/${DOMAIN}/" $file
-        echo "Modified: $file"
-    done
-    podman build -t schema .
-    podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:443 -p 80:80 schema
-    curl --head -X GET --retry 10 --retry-connrefused --retry-delay 2 --fail http://localhost:80
+    #for file in $(find ./ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
+    #    sed -i "s/schema.example.com/${DOMAIN}/" $file
+    #    echo "Modified: $file"
+    #done
+    #podman build -t schema .
+    #podman run -d --name schema -e "DOMAIN=${DOMAIN}" -p 443:443 -p 80:80 schema
+    curl --head -X GET --retry 10 --retry-connrefused --retry-delay 2 --fail http://${DOMAIN}:80
     openssl s_client -showcerts -connect localhost:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /etc/pki/ca-trust/source/anchors/server.crt
     update-ca-trust
-    echo "127.0.0.1 ${DOMAIN}" >> /etc/hosts
+    # echo "127.0.0.1 ${DOMAIN}" >> /etc/hosts
     helm lint schema-test/
 
 pages:

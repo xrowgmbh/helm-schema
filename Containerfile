@@ -13,5 +13,8 @@ RUN sed -i \
 		-e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
 		conf/httpd.conf
 
+EXPOSE 80
+EXPOSE 443
+
 ENTRYPOINT ["/bin/entrypoint.sh"]
 CMD ["httpd-foreground"]

@@ -7,7 +7,39 @@
             "type": "object"
         },
         "resources": {
-            "type": "object"
+            "description": "The hardware resources Kubernetes shall use for every pod",
+            "properties": {
+                "limits": {
+                    "description": "The limit of hardware usage for each pod",
+                    "properties": {
+                        "cpu": {
+                            "description": "Limit of CPU usage per pod",
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*m$"
+                        },
+                        "memory": {
+                            "description": "Limit of memory usage per pod",
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*(Gi|Mi)$"
+                        }
+                    }
+                },
+                "requests": {
+                    "description": "The minimum requested hardware for each pod",
+                    "properties": {
+                        "cpu": {
+                            "description": "The minimum of requested CPU capacity for each pod",
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*m$"
+                        },
+                        "memory": {
+                            "description": "The minimum of requested memory capacity for each pod",
+                            "type": "string",
+                            "pattern": "^[1-9][0-9]*(Gi|Mi)$"
+                        }
+                    }
+                }
+            }
         },
         "command": {
             "type": "array",

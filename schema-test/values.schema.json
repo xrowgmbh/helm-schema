@@ -1,27 +1,27 @@
 {
     "$schema": "http://json-schema.org/schema#",
-    "id": "https://chart.xrow.com/schema-test/values.schema.json",
+    "id": "https://schema.example.com/schema-test/values.schema.json",
     "type": "object",
     "properties": {
         "persistence": {
-            "$ref": "https://schema.xrow.com/helm/common.json#definitions/Persistence"
+            "$ref": "https://schema.example.com/helm/common.json#definitions/Persistence"
         },
         "serviceAccount": {
-            "$ref": "https://schema.xrow.com/helm/common.json#definitions/ServiceAccount"
+            "$ref": "https://schema.example.com/helm/common.json#definitions/ServiceAccount"
         }
     },
     "allOf": [
         {
-            "$ref": "https://schema.xrow.com/helm/ingress.json"
+            "$ref": "https://schema.example.com/helm/ingress.json"
         },
         {
-            "$ref": "https://schema.xrow.com/helm/base.json"
+            "$ref": "https://schema.example.com/helm/base.json"
         },
         {
-            "$ref": "https://schema.xrow.com/helm/pod.json"
+            "$ref": "https://schema.example.com/helm/pod.json"
         },
         {
-            "$ref": "https://schema.xrow.com/helm/container.json"
+            "$ref": "https://schema.example.com/helm/container.json"
         }
     ]
 }

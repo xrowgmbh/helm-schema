@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema#",
-    "id": "https://xrow.com/helm/ingress.json",
+    "id": "https://schema.example.com/helm/ingress.json",
     "type": "object",
     "required": [
         "ingress",

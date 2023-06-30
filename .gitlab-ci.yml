@@ -1,6 +1,6 @@
 
 variables:
-  DOMAIN: schema.xrow.com
+  DOMAIN: schema.example.com
 
 test:
   image: quay.io/podman/stable:latest
@@ -20,7 +20,12 @@ test:
 pages:
   needs: ["test"]
   script:
-    - echo "Publish schemas"
+  - |
+    echo "Publish schemas for ${DOMAIN}"
+    for file in $(find public/ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
+      cat $file | envsubst "$(env | sed -e 's/=.*//' -e 's/^/\$/g')" > $file
+      echo "Modified: $file"
+    done
   artifacts:
     paths:
       - public

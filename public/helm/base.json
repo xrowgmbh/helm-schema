@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema#",
-    "id": "https://xrow.com/helm/common.json",
+    "id": "https://schema.example.com/helm/common.json",
     "type": "object",
     "properties": {
         "global": {

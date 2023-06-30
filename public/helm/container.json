@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema#",
-    "id": "https://xrow.com/helm/container.json",
+    "id": "https://schema.example.com/helm/container.json",
     "type": "object",
     "properties": {
         "securityContext": {

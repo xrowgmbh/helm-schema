@@ -20,7 +20,7 @@ name: common
 sources:
   - https://gitlab.com/xrow-public/schema
 type: library
-version: 2.4.0
+version: 0.0.0
 dependencies:
   - name: common
     version: 2.x.x

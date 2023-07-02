@@ -1,0 +1,6 @@
+dependencies:
+- name: webserver
+  repository: oci://registry.gitlab.com/xrow-public/helm-webserver/charts
+  version: 1.2.9
+digest: sha256:490f9da9a0ebf67b239d94396f846a3e2adf488340c024e737d7382eadb1dc58
+generated: "2023-07-02T18:39:22.819193225+02:00"

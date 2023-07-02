@@ -151,17 +151,17 @@
                 "registry": {
                     "description": "Docker registry where the image is located",
                     "type": "string",
-                    "pattern": "^[a-z0-9-.]+$"
+                    "pattern": "^([a-z0-9-.]+|\\$\\{[A-Z_/.]+\\})$"
                 },
                 "repository": {
                     "description": "Repository and image name",
                     "type": "string",
-                    "pattern": "^[a-z0-9-_/.]+$"
+                    "pattern": "^([a-z0-9-_/.]+|\\$\\{[A-Z_/.]+\\})$"
                 },
                 "tag": {
                     "description": "image tag",
                     "type": "string",
-                    "pattern": "^[a-z0-9-.]+$"
+                    "pattern": "^([a-z0-9-.]+|\\$\\{[A-Z_/.]+\\})$"
                 },
                 "pullPolicy": {
                     "description": "Specify a imagePullPolicy. Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'",

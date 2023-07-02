@@ -45,6 +45,7 @@ pages:
       echo "Setup CI variable DOMAIN"
       exit 1
     fi
+    cp -R src/public public/
     echo "Publish schemas for ${DOMAIN}"
     for file in $(find ${DOCUMENT_ROOT}/ -maxdepth 3 -regextype posix-extended -iregex '.*[.]json' | sort -g); do 
         sed -i "s/schema.example.com/${DOMAIN}/" $file

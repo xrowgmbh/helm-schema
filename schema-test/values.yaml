@@ -80,3 +80,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Other service with variable substiution
+webserver:
+  image:
+    registry: ${CI_REGISTRY}
+    repository: ${CI_PROJECT_PATH}
+    tag: ${CI_COMMIT_SHA}
+    pullPolicy: IfNotPresent

@@ -3,17 +3,12 @@ ARG WEBSERVER_IMAGE=registry.redhat.io/rhel8/httpd-24
 FROM ${WEBSERVER_IMAGE}
 
 ENV DOMAIN=schema.example.com
-ENV DOCUMENT_ROOT=/usr/local/apache2/htdocs
 
 # Add application sources to a directory where the assemble script expects them
 # and set permissions so that the container runs without the root access
 USER 0
 
-COPY ./public/ /tmp/src/
-
-COPY ./httpd-pre-init/ /tmp/src/httpd-pre-init
-COPY ./httpd-cfg/ /tmp/src/httpd-cfg
-
+ADD ./src/ /tmp/src/
 
 RUN chown -R 1001:0 /tmp/src
 

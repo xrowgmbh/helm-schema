@@ -2,12 +2,25 @@
     "$schema": "http://json-schema.org/schema#",
     "id": "https://schema.example.com/schema-test/values.schema.json",
     "type": "object",
+    "required": [ 
+        "webserver"
+    ],
     "properties": {
         "persistence": {
             "$ref": "https://schema.example.com/helm/common.json#definitions/Persistence"
         },
         "serviceAccount": {
             "$ref": "https://schema.example.com/helm/common.json#definitions/ServiceAccount"
+        },
+        "webserver": {
+            "allOf": [
+                {
+                    "$ref": "https://schema.example.com/helm/pod.json"
+                },
+                {
+                    "$ref": "https://schema.example.com/helm/container.json"
+                }
+            ]
         }
     },
     "allOf": [

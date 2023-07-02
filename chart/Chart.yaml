@@ -16,7 +16,7 @@ keywords:
 maintainers:
   - name: XROW GMBH
     url: https://www.xrow.de
-name: common
+name: schema
 sources:
   - https://gitlab.com/xrow-public/schema
 type: library

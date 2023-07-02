@@ -19,7 +19,7 @@ maintainers:
 name: schema
 sources:
   - https://gitlab.com/xrow-public/schema
-type: library
+type: application
 version: 0.0.0
 dependencies:
 - name: webserver

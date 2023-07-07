@@ -1,0 +1,99 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "metrics": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Flag to enable or disable metrics collection."
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "Annotations to add to the metrics service."
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "The type of the metrics service."
+                        },
+                        "ports": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Name of the port."
+                                    },
+                                    "port": {
+                                        "type": "integer",
+                                        "description": "The port number."
+                                    },
+                                    "targetPort": {
+                                        "type": "integer",
+                                        "description": "The port number on the target."
+                                    },
+                                    "protocol": {
+                                        "type": "string",
+                                        "description": "The protocol used by the port."
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "port"
+                                ]
+                            },
+                            "description": "A list of ports exposed by the metrics service."
+                        }
+                    }
+                },
+                "serviceMonitor": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Flag to enable or disable the creation of a ServiceMonitor."
+                        },
+                        "labels": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "Labels to add to the ServiceMonitor."
+                        },
+                        "interval": {
+                            "type": "string",
+                            "description": "Scrape interval for the ServiceMonitor."
+                        },
+                        "scrapeTimeout": {
+                            "type": "string",
+                            "description": "Scrape timeout for the ServiceMonitor."
+                        }
+                    }
+                },
+                "endpoints": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Additional configuration for endpoints."
+                    },
+                    "description": "Additional endpoints for metrics scraping."
+                }
+            },
+            "required": [
+                "enabled"
+            ]
+        }
+    },
+    "required": [
+        "metrics"
+    ]
+}

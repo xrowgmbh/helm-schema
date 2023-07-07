@@ -1,0 +1,4 @@
+{{ include "common.tpl.metrics" . }}
+{{ include "common.tpl.autoscaling" . }}
+{{ include "common.tpl.ingress" . }}
+{{ include "common.tpl.serviceaccount" . }}

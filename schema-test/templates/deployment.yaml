@@ -5,9 +5,6 @@ metadata:
   labels:
     {{- include "common.labels.standard" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "common.labels.matchLabels" . | nindent 6 }}
@@ -19,22 +16,13 @@ spec:
       {{- end }}
       labels:
         {{- include "common.labels.standard" . | nindent 8 }}
+{{ include "common.tpl.pod" . | nindent 6 }}
     spec:
-      serviceAccountName: {{ include "schema-test.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
 {{ include "common.tpl.container" . | nindent 10 }}
-{{ include "common.tpl.pod" . | nindent 6 }}
 {{ include "common.images.pullSecrets" ( dict "images" (list .Values.image) "global" .Values.global) }}

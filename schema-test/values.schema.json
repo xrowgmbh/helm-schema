@@ -2,15 +2,12 @@
     "$schema": "http://json-schema.org/schema#",
     "id": "https://schema.example.com/schema-test/values.schema.json",
     "type": "object",
-    "required": [ 
+    "required": [
         "webserver"
     ],
     "properties": {
         "persistence": {
             "$ref": "https://schema.example.com/helm/common.json#definitions/Persistence"
-        },
-        "serviceAccount": {
-            "$ref": "https://schema.example.com/helm/common.json#definitions/ServiceAccount"
         },
         "webserver": {
             "allOf": [
@@ -25,16 +22,30 @@
     },
     "allOf": [
         {
-            "$ref": "https://schema.example.com/helm/ingress.json"
+            "$ref": "https://schema.example.com/helm/base.json"
         },
         {
-            "$ref": "https://schema.example.com/helm/base.json"
+            "$ref": "https://schema.example.com/helm/ingress.json"
         },
         {
             "$ref": "https://schema.example.com/helm/pod.json"
         },
         {
             "$ref": "https://schema.example.com/helm/container.json"
+        },
+        {
+            "$ref": "https://schema.example.com/helm/metrics.json"
+        },
+        {
+            "$ref": "https://schema.example.com/helm/autoscaling.json"
+        },
+        {
+            "$ref": "https://schema.example.com/helm/serviceaccount.json"
         }
-    ]
+    ],
+    "dependencies": {
+        "ingress": [
+            "service"
+        ]
+    }
 }

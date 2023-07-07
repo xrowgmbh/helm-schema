@@ -1,4 +1,10 @@
 {{- define "common.tpl.pod" -}}
+{{- if .Values.serviceaccount }}
+serviceAccountName: {{ include "common.names.fullname" . }}
+{{- end }}
+{{- if not .Values.autoscaling }}
+replicas: {{ .Values.replicaCount }}
+{{- end }}
 securityContext:
   {{- toYaml .Values.podSecurityContext | nindent 8 }}
 {{- with .Values.nodeSelector }}

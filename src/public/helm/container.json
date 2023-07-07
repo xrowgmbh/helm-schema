@@ -2,6 +2,10 @@
     "$schema": "http://json-schema.org/schema#",
     "id": "https://schema.example.com/helm/container.json",
     "type": "object",
+    "required": [
+        "livenessProbe",
+        "readinessProbe"
+    ],
     "properties": {
         "securityContext": {
             "type": "object",
@@ -109,6 +113,9 @@
                 "path": {
                     "type": "string"
                 },
+                "port": {
+                    "type": "integer"
+                },
                 "exec": {
                     "type": "object"
                 },
@@ -128,14 +135,29 @@
                     "type": "integer"
                 }
             },
-            "required": [
-                "enabled",
-                "failureThreshold",
-                "initialDelaySeconds",
-                "periodSeconds",
-                "successThreshold",
-                "timeoutSeconds"
+            "oneOf": [
+                {
+                    "required": [
+                        "command"
+                    ],
+                    "not": {
+                        "required": [
+                            "path"
+                        ]
+                    }
+                },
+                {
+                    "required": [
+                        "path"
+                    ],
+                    "not": {
+                        "required": [
+                            "command"
+                        ]
+                    }
+                }
             ],
+            "required": [],
             "title": "Probe"
         },
         "Image": {

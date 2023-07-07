@@ -1,0 +1,59 @@
+{{- define "common.tpl.metrics" -}}
+{{- $defaultValues := dict 
+    "enabled" true
+    "service" ( dict 
+        "type" "ClusterIP"
+        "annotations" ( dict "prometheus.io/scrape" "true" "prometheus.io/path" "/metrics" "prometheus.io/port" "8080" )
+    )
+    "ports" (
+      list ( 
+        dict "name" "metrics" "port" 8080 "targetPort" 8080 "protocol" "TCP"
+      )
+    )
+    "serviceMonitor" ( dict 
+      "enabled" true
+      "interval" "30s"
+      "scrapeTimeout" "10s"
+    ) 
+-}}
+{{- $_ := set .Values "metrics" (merge .Values.metrics $defaultValues ) }}
+{{- if .Values.metrics.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.names.fullname" . }}-metrics
+  labels:
+    {{- include "common.labels.standard" . | nindent 4 }}
+  annotations:
+    {{- toYaml .Values.metrics.service.annotations | nindent 4 }}
+spec:
+  type: {{ .Values.metrics.service.type }}
+  ports:
+    {{- toYaml .Values.metrics.service.ports | nindent 4 }}
+  selector:
+    {{- include "common.labels.matchLabels" . | nindent 4 }}
+{{- end }}
+
+{{- if and .Values.metrics.enabled .Values.metrics.serviceMonitor.enabled }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  labels:
+    {{- include "common.labels.standard" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "common.labels.matchLabels" . | nindent 6 }}
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.metrics.serviceMonitor.interval }}
+      scrapeTimeout: {{ .Values.metrics.serviceMonitor.scrapeTimeout }}
+      {{- with .Values.metrics.endpoints }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+{{- end }}
+
+{{- end -}}
